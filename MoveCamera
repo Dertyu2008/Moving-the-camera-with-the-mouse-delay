@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MoveCamera : MonoBehaviour
+{
+    private int screenWidth;
+    private int screenHeight;
+    private Vector3 camPos;
+    private Vector2 one1, two1, res;
+
+    public float speed;
+    void Start()
+    {
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
+    }
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            one1 = Input.mousePosition;
+        }
+        if (Input.GetMouseButton(1))
+        {
+            res = lineUp(one1);
+            //speed = 1.5f / Vector2.Distance(res, one1);
+            if (transform.position.x != -res.x / 10 * speed)
+            {
+                camPos.x += -res.x / 10 * speed;
+            }
+            if (transform.position.z != -res.y / 10 * speed)
+            {
+                camPos.z += -res.y / 10 * speed;
+            }
+            one1 = Input.mousePosition;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            two1 = one1 = Input.mousePosition;
+        }
+        transform.position = camPos;
+    }
+    public Vector2 lineUp(Vector2 one)
+    {
+        two1 = Input.mousePosition;
+        Vector2 t = two1 - one;
+        return t;
+    }
+}
